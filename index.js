@@ -9,6 +9,7 @@ app.use(express.json());
 // app.use(express.urlencoded());
 app.use(require('./routes'));
 
+mongoose.set('strictQuery', false) 
 
 mongoose.connect("mongodb+srv://aybi:123@cluster0.lvirmgm.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
@@ -16,7 +17,6 @@ mongoose.connect("mongodb+srv://aybi:123@cluster0.lvirmgm.mongodb.net/?retryWrit
    
   }).then(() => console.log('Успешно соединились с сервером MongoDB'))
   .catch(() => console.log('Ошибка при соединении с сервером MongoDB'))
-  mongoose.set('StrictQuery', false) 
 app.listen(port, ()=>{
     console.log(`Example app listening at http://localhost:${port}`);
 })

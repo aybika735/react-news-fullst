@@ -27,4 +27,4 @@ const Put = () => {
     );
 };
 
-export {Put};
+export default Put;
