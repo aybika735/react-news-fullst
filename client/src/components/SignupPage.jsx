@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { auth } from "../features/newsReducer";
+import { createUser } from "../features/newsReducer";
 
-const Signinpage = () => {
+const Signuppage = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const signingIn = useSelector((state) => state.signingIn);
-  
-  const error = useSelector((state) => state.error);
+  const signingUp = useSelector((state) => state.signingUp);
 
+  const error = useSelector((state) => state.error);
   const handleChangeLogin = (e) => {
     setLogin(e.target.value);
   };
@@ -18,7 +17,7 @@ const Signinpage = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(auth(login, password))
+    dispatch(createUser(login, password));
   };
   return (
     <div className="registration">
@@ -39,9 +38,11 @@ const Signinpage = () => {
           onChange={handleChangePassword}
         />
       </div>
-      <button disabled={signingIn} onClick={handleSubmit}>авторизация</button>
+      <button disabled={signingUp} onClick={handleSubmit}>
+        регистрация
+      </button>
     </div>
   );
 };
 
-export { Signinpage };
+export default Signuppage;
