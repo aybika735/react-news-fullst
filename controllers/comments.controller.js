@@ -4,13 +4,12 @@ const e = require("express");
 
 module.exports.commentscontroller = {
   createComments: async function (req, res) {
-    const { text, newsId } = req.body;
+    const { text, categoryId} = req.body;
 
     try {
       const comment = await Comment.create({
-        text,
-        userId: req.user.id,
-        newsId: newsId,
+        text:text,
+        categoryId: categoryId
       });
       res.json(comment);
     } catch (error) {
@@ -32,9 +31,9 @@ module.exports.commentscontroller = {
     }
   },
 
-  getCommentsByNews: async (req, res) => {
+  getCommentsByCategory: async (req, res) => {
     try {
-      let comments = await Comment.find({ newsId: req.params.id });
+      let comments = await Comment.find({ categoryId: req.params.id });
       res.json(comments);
     } catch (error) {
       res.json(error);

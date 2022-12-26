@@ -7,9 +7,19 @@ import facebook from "../icons/facebook.png";
 import linkedin from "../icons/linkedin.png";
 import whatsapp from "../icons/whatsapp.png";
 import youtube from "../icons/youtube.png";
+// import { fetchTodos } from "../features/todosReducer";
+// import {fetchComments} from '../features/commentsReducer'
+// import { useDispatch } from 'react-redux';
+
+// import { useEffect } from "react";
 
 const Layout = () => {
-  const [text] = useState("Поиск по сайту");
+  // const dispatch = useDispatch();
+  // useEffect(()=>{
+  //   dispatch(fetchTodos())
+  //   dispatch(fetchComments())
+  // },[dispatch])
+  const [poisk] = useState("Поиск по сайту");
 
   return (
     <>
@@ -17,7 +27,7 @@ const Layout = () => {
         <div className="logo">TodayNews</div>
         <div className="input">
           <form>
-            <input type="text" name="text" value={text} />
+            <input type="text" name="text" value={poisk} />
           </form>
         </div>
         <Link className="registration" to="/signup">
@@ -44,7 +54,8 @@ const Layout = () => {
       <div className="maincontant">
         <Outlet />
       </div>
-
+      
+     
       <div className="footer">
         <div className="footer-flex">
           <div className="logo">TodayNews</div>

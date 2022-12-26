@@ -3,6 +3,7 @@ module.exports.categoriescontroller = {
   createCategories: async function (req, res) {
     await Category.create({
       name: req.body.name,
+      
     });
     res.json("Категория добавлена");
   },

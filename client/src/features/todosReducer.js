@@ -14,7 +14,7 @@ const todosReducer = createReducer(initialState, (builder) => {
     .addCase("todosReducer/fetch-todos/fulfilled", (state, action) => {
       return {
         loading: false,
-        items: console.log(action.payload),
+        items: action.payload,
       };
     })
     .addCase("todosReducer/fetch-todos/rejected", (state, action) => {
@@ -25,13 +25,13 @@ const todosReducer = createReducer(initialState, (builder) => {
       };
     });
 });
-export { todosReducer };
+
 
 export const fetchTodos = () => {
   return async (dispatch) => {
     dispatch({ type: "todosReducer/fetch-todos/pending" });
     try {
-      const response = await fetch("/todos", {
+      const response = await fetch("/news", {
 
       });
       const json = await response.json();
@@ -48,3 +48,4 @@ export const fetchTodos = () => {
     }
   };
 };
+export { todosReducer };

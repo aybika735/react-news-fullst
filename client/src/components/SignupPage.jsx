@@ -8,7 +8,8 @@ const Signuppage = () => {
   const dispatch = useDispatch();
   const signingUp = useSelector((state) => state.signingUp);
 
-  const error = useSelector((state) => state.error);
+  const error = useSelector((state) => state.news.error);
+ 
   const handleChangeLogin = (e) => {
     setLogin(e.target.value);
   };

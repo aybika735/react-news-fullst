@@ -146,6 +146,7 @@ const newsReducer = createReducer(initialState,(builder)=>{
   
 });
 export {newsReducer};
+
 export const createUser = (login, password) =>{
 return async dispatch =>{
   dispatch({type: 'newsReducer/signup/pending'});
