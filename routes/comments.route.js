@@ -3,11 +3,11 @@ const { commentscontroller } = require("../controllers/comments.controller");
 const router = Router();
 const authmiddleware = require("../models/middlewares/auth.middleware");
 
-router.post("/comments",  commentscontroller.createComments);
+router.post("/comments", authmiddleware, commentscontroller.createComments);
 
-router.delete("/comments/:id", commentscontroller.deleteCommentById);
+router.delete("/comments/:id", authmiddleware,commentscontroller.deleteCommentById);
 
 router.get("/comments/news/:id", commentscontroller.getCommentsByCategory);
-router.get("/comments", commentscontroller.getAllComments);
+router.get("/comments",  commentscontroller.getAllComments);
 
 module.exports = router;

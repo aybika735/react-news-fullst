@@ -26,13 +26,13 @@ const todosReducer = createReducer(initialState, (builder) => {
     });
 });
 
-
 export const fetchTodos = () => {
   return async (dispatch) => {
+    
     dispatch({ type: "todosReducer/fetch-todos/pending" });
     try {
       const response = await fetch("/news", {
-
+       
       });
       const json = await response.json();
       if (json.error) {
@@ -44,7 +44,10 @@ export const fetchTodos = () => {
         dispatch({ type: "todosReducer/fetch-todos/fulfilled", payload: json });
       }
     } catch (e) {
-      dispatch({ type: "todosReducer/fetch-todos/rejected", error: e.toString() });
+      dispatch({
+        type: "todosReducer/fetch-todos/rejected",
+        error: e.toString(),
+      });
     }
   };
 };

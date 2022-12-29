@@ -9,7 +9,7 @@ const Signinpage = () => {
   const signingIn = useSelector((state) => state.signingIn);
 
   const error = useSelector((state) => state.news.error);
-  console.log(error)
+ 
   const handleChangeLogin = (e) => {
     setLogin(e.target.value);
   };

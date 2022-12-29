@@ -6,7 +6,8 @@ export const store = configureStore({
   reducer:  {
    news: newsReducer,
    todos: todosReducer,
-   comments: commentsReducer
+   comments: commentsReducer,
+   
   } 
   
 });

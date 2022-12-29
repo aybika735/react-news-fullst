@@ -1,11 +1,10 @@
 import { createReducer } from "@reduxjs/toolkit";
 
-
 const initialState = {
   signingUp: false,
   signingIn: false,
   error: null,
-  token: null,
+  token: localStorage.getItem('token'),
   // news: [
   //   {
   //     id: 1,
@@ -85,8 +84,7 @@ const initialState = {
   //     categoryId: 3,
   //     image: "https://news.store.rambler.ru/img/cda9b09f82f0079f6e8ec68a2ca60268?img-format=auto&img-1-resize=height:710,fit:max",
   //   },
-    
-    
+
   // ],
   // categories: [
   //   {
@@ -102,92 +100,86 @@ const initialState = {
   //     name: "Путешествия",
   //   },
   // ],
-}
-const newsReducer = createReducer(initialState,(builder)=>{
+};
+const newsReducer = createReducer(initialState, (builder) => {
   builder
-  .addCase ('newsReducer/signup/pending', (state, action)=>{
-    return{
-      signingUp:true,
-      error: null
-   
-    }
-  })
-  .addCase ('newsReducer/signup/fulfilled', (state, action)=>{
-    return{
-      signingUp:false,
-    }
-  })
-  .addCase ('newsReducer/signup/rejected', (state, action)=>{
-    return{
-      signingUp:false,
-      error: action.error
-    }
-  })
-  .addCase ('newsReducer/signin/pending', (state, action)=>{
-    return{
-      signingIn:true,
-      error: null
-   
-    }
-  })
-  .addCase ('newsReducer/signin/fulfilled', (state, action)=>{
-    return{
-      signingIn:false,
-      token:action.payload.token
-    }
-  })
-  .addCase ('newsReducer/signin/rejected', (state, action)=>{
-    return{
-      signingIn:false,
-      error: action.error
-    }
-  })
-
-  
+    .addCase("newsReducer/signup/pending", (state, action) => {
+      return {
+        signingUp: true,
+        error: null,
+      };
+    })
+    .addCase("newsReducer/signup/fulfilled", (state, action) => {
+      return {
+        signingUp: false,
+      };
+    })
+    .addCase("newsReducer/signup/rejected", (state, action) => {
+      return {
+        signingUp: false,
+        error: action.error,
+      };
+    })
+    .addCase("newsReducer/signin/pending", (state, action) => {
+      return {
+        signingIn: true,
+        error: null,
+      };
+    })
+    .addCase("newsReducer/signin/fulfilled", (state, action) => {
+     
+      return {
+        signingIn: false,
+        token: action.payload.token,
+      };
+    })
+    .addCase("newsReducer/signin/rejected", (state, action) => {
+      return {
+        signingIn: false,
+        error: action.error,
+      };
+    });
 });
-export {newsReducer};
+export { newsReducer };
 
-export const createUser = (login, password) =>{
-return async dispatch =>{
-  dispatch({type: 'newsReducer/signup/pending'});
-  const response = await fetch('/users', {
-    method: 'POST',
-    body: JSON.stringify({login, password}),
-    headers:{
-      "Content-type":"application/json"
+export const createUser = (login, password) => {
+  return async (dispatch) => {
+    dispatch({ type: "newsReducer/signup/pending" });
+    const response = await fetch("/users", {
+      method: "POST",
+      body: JSON.stringify({ login, password }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    const json = await response.json();
+    if (json.error) {
+      dispatch({ type: "newsReducer/signup/rejected", error: json.error });
+    } else {
+      dispatch({ type: "newsReducer/signup/fulfilled", payload: json });
     }
-  });
- 
-  const json = await response.json();
-  if(json.error){
-    dispatch({type:'newsReducer/signup/rejected', error: json.error});
-
-  }else{
-    dispatch({type:'newsReducer/signup/fulfilled', payload: json});
-  }
-}
-}
+  };
+};
 
 export const auth = (login, password) => {
-  return async dispatch=>{
-    dispatch({type: 'newsReducer/signin/pending'});
-    const response = await fetch('/login', {
-      method: 'POST',
-      body: JSON.stringify({login, password}),
-      headers:{
-        "Content-type":"application/json"
-      }
-      
+  return async (dispatch) => {
+    dispatch({ type: "newsReducer/signin/pending" });
+    const response = await fetch("/login", {
+      method: "POST",
+      body: JSON.stringify({ login, password }),
+      headers: {
+        "Content-type": "application/json",
+      },
     });
-   
+
     const json = await response.json();
-    
-    if(json.error){
-      dispatch({type:'newsReducer/signin/rejected', error: json.error});
-  
-    }else{
-      dispatch({type:'newsReducer/signin/fulfilled', payload: json});
+
+    if (json.error) {
+      dispatch({ type: "newsReducer/signin/rejected", error: json.error });
+    } else {
+      dispatch({ type: "newsReducer/signin/fulfilled", payload: json });
+      localStorage.setItem('token', json.token);
     }
-  }
-  
-}
+  };
+};

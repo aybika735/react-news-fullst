@@ -7,9 +7,11 @@ module.exports.commentscontroller = {
     const { text, categoryId} = req.body;
 
     try {
+      
       const comment = await Comment.create({
-        text:text,
-        categoryId: categoryId
+        text,
+        userId: req.user.id,
+        categoryId
       });
       res.json(comment);
     } catch (error) {
@@ -23,7 +25,7 @@ module.exports.commentscontroller = {
       const comment = await Comment.findById(id);
       if (comment.userId.toString() === req.user.id) {
         await comment.remove();
-        return res.json("удалено");
+        return res.json(id);
       }
       return res.status(401).json("ошибка! Нет доступа");
     } catch (error) {
