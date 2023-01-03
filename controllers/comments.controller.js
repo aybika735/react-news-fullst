@@ -14,6 +14,7 @@ module.exports.commentscontroller = {
         categoryId
       });
       res.json(comment);
+      console.log(comment)
     } catch (error) {
       return res.status(401).json(e.toString());
     }
@@ -35,7 +36,7 @@ module.exports.commentscontroller = {
 
   getCommentsByCategory: async (req, res) => {
     try {
-      let comments = await Comment.find({ categoryId: req.params.id });
+      let comments = await Comment.find({ categoryId: req.params.categoryId });
       res.json(comments);
     } catch (error) {
       res.json(error);

@@ -7,7 +7,7 @@ const Signinpage = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const signingIn = useSelector((state) => state.signingIn);
-
+ 
   const error = useSelector((state) => state.news.error);
  
   const handleChangeLogin = (e) => {
@@ -23,24 +23,41 @@ const Signinpage = () => {
   return (
     <div className="registration">
       {error}
-      <div>
+      <div className="inputemail">
+        <div className="erroremail">
+          
+          </div>
+       <div className="inputvaluelog">
         <input
+       
+        name="email"
           type="text"
-          placeholder="type login"
+          placeholder="Enter your email..."
           value={login}
-          onChange={handleChangeLogin}
-        />
+          onChange={(e)=>handleChangeLogin(e)}
+        /> 
+        </div>
+        
       </div>
-      <div>
+      <div className="inputpassword">
+        <div className="errorpassword"></div>
+       
+       <div className="inputvaluepas">
         <input
+        name="password"
           type="text"
-          placeholder="type password"
+          placeholder="Enter your password..."
           value={password}
-          onChange={handleChangePassword}
+          onChange={(e)=>handleChangePassword(e)}
         />
+        </div> 
       </div>
-      <button disabled={signingIn} onClick={handleSubmit}>
-        авторизация
+      <button 
+      className="btn"
+      type="sumbit"
+      disabled={signingIn} 
+      onClick={handleSubmit}>
+        вход
       </button>
     </div>
   );

@@ -154,10 +154,7 @@ input:focus{
   width: 30px;
   
 }
-.Regisration{
-  position: relative;
-  z-index: 1;
-}
+
 .reg-block{
   position: absolute;
   top:100px;
@@ -205,4 +202,42 @@ height: 200px;
 .todo button{
   border-radius: 10px;
   border:2px solid #23aea3;
+}
+.btn {
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  color: #fff;
+  background-color: #23aea3;
+  cursor: pointer;
+  width: 150px;
+  margin-top: 20px;
+}
+.disabled {
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  color: #fff;
+  background-color: grey;
+  cursor: pointer;
+  width: 150px;
+  margin-top: 20px;
+  cursor: not-allowed  !important;
+}
+.inputemail{
+  height:65px ;
+
+}
+.inputpassword{
+  height: 65px;
+ 
+}
+.erroremail{
+  height: 30.5px;
+}
+.errorpassword{
+  height: 30.5px;
+}
+.inputvaluepas, .inputvaluelog{
+  height: 35px;
 }

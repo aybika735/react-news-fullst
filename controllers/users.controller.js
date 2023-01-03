@@ -13,7 +13,7 @@ module.exports.usersController = {
     res.json(user);
     }catch(e){
       return res.status(400).json({
-        error:"Ошибка при регистрации " + e.toString()
+        error:"Ошибка при регистрации, пользователь с таким логином уже существует" 
       })
     }
    

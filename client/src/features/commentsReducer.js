@@ -3,11 +3,31 @@ import { createReducer } from "@reduxjs/toolkit";
 const initialState = {
   loading: true,
   comments: [],
+ 
+ 
 
 };
 
 const commentsReducer = createReducer(initialState, (builder) => {
   builder
+  .addCase("commentsReducer/fetch-todos-category/pending", (state, action) => {
+    return {
+      loading: true,
+    };
+  })
+  .addCase("commentsReducer/fetch-todos-category/fulfilled", (state, action) => {
+    return {
+      loading: false,
+
+      comments: action.payload
+    };
+  })
+  .addCase("commentsReducer/fetch-todos-category/rejected", (state, action) => {
+    return {
+      loading: false,
+      comments: [],
+    };
+  })
      .addCase("commentsReducer/fetch-todos/pending", (state, action) => {
       return {
         loading: true,
@@ -17,6 +37,7 @@ const commentsReducer = createReducer(initialState, (builder) => {
       return {
         loading: false,
         comments: action.payload,
+       
       };
     })
     .addCase("commentsReducer/fetch-todos/rejected", (state, action) => {
@@ -31,12 +52,10 @@ const commentsReducer = createReducer(initialState, (builder) => {
       };
     })
     .addCase(`commentsReducer/comments/fulfilled`, (state, action) => {
-      console.log(action.payload);
+     
       return {
         loading: false,
-       
         comments:  [...state.comments, action.payload]
-        
       };
     })
     .addCase("commentsReducer/comments/rejected", (state, action) => {
@@ -57,10 +76,14 @@ const commentsReducer = createReducer(initialState, (builder) => {
       return {
         
         loading: false,
+        // comments:action.payload
         comments: state.comments.filter((item)=>{
           if(item._id===action.payload) return false;
           return true;
         })
+        
+        
+       
       
       };
     })
@@ -73,7 +96,6 @@ const commentsReducer = createReducer(initialState, (builder) => {
 });
 
 export const createComment = (text, categoryId) => {
-  console.log(text)
   return async (dispatch, getState) => {
     const state = getState();
     dispatch({ type: "commentsReducer/comments/pending" });
@@ -89,14 +111,15 @@ export const createComment = (text, categoryId) => {
     });
 
     const json = await response.json();
-console.log(json);
+
     if (json.error) {
       dispatch({
         type: "commentsReducer/comments/rejected",
         error: json.error,
       });
-    } else {
-      dispatch({ type: "commentsReducer/comments/fulfilled", payload: [json] });
+    } 
+    else {
+      // dispatch({ type: "commentsReducer/comments/fulfilled", payload: json });
     }
     }catch (e) {
       dispatch({
@@ -104,10 +127,34 @@ console.log(json);
         error: e.toString(),
       });
     }
-    
-    
   };
 };
+// export const fetchCommentsbyCategory = (categoryId) => {
+//   return async (dispatch) => {
+//     dispatch({ type: "commentsReducer/fetch-todos-category/pending" });
+//     try {
+//       const response = await fetch(`/comments/${categoryId}`, {});
+//       const json = await response.json();
+
+//       if (json.error) {
+//         dispatch({
+//           type: "commentsReducer/fetch-todos-category/rejected",
+//           error: "При запросе на сервер произошла ошибка",
+//         });
+//       } else {
+//         dispatch({
+//           type: "commentsReducer/fetch-todos-category/fulfilled",
+//           payload: json,
+//         });
+//       }
+//     } catch (e) {
+//       dispatch({
+//         type: "commentsReducer/fetch-todos-category/rejected",
+//         error: e.toString(),
+//       });
+//     }
+//   };
+// };
 export const fetchComments = () => {
   return async (dispatch) => {
     dispatch({ type: "commentsReducer/fetch-todos/pending" });
