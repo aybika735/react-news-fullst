@@ -1,5 +1,4 @@
 import React from "react";
-// import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import instagram from "../icons/instagram.png";
 import telegram from "../icons/telegram.png";
@@ -8,19 +7,14 @@ import linkedin from "../icons/linkedin.png";
 import whatsapp from "../icons/whatsapp.png";
 import youtube from "../icons/youtube.png";
 
-
 const Layout = () => {
-
-  // const [poisk] = useState("Поиск по сайту");
-
-
   return (
     <>
       <div className="header">
         <div className="logo">TodayNews</div>
         <div className="input">
           <form>
-            <input type="text" name="text"  />
+            <input type="text" name="text" />
           </form>
         </div>
         <Link className="registration" to="/signup">
@@ -34,18 +28,13 @@ const Layout = () => {
         <Link className="nav-link" to="/">
           Главная
         </Link>
-        <Link 
-        
-       
-        className="nav-link" to="/sport">
+        <Link className="nav-link" to="/sport">
           Спорт
         </Link>
-        <Link  
-        className="nav-link" to="/politic">
+        <Link className="nav-link" to="/politic">
           Политика
         </Link>
-        <Link 
-        className="nav-link" to="/put">
+        <Link className="nav-link" to="/put">
           Путешествия
         </Link>
       </div>
