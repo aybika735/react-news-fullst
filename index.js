@@ -1,22 +1,37 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const cors = require("cors");
 
-const app= express();
-const port = 5000;
+const app = express();
 
-app.use(express.json());
-// app.use(express.urlencoded());
-app.use(require('./routes'));
+const { MONGO_SERVER, PORT } = process.env;
 
-mongoose.set('strictQuery', false) 
-
-mongoose.connect("mongodb+srv://aybi:123@cluster0.lvirmgm.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect(
+  MONGO_SERVER,
+  {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-   
-  }).then(() => console.log('Успешно соединились с сервером MongoDB'))
-  .catch(() => console.log('Ошибка при соединении с сервером MongoDB'))
-app.listen(port, ()=>{
-    console.log(`Example app listening at http://localhost:${port}`);
-})
+  },
+  () => {
+    try {
+      console.log("Успешно соединились с сервером MongoDB");
+    } catch (err) {
+      console.log(`Ошибка при соединении с сервером MongoDB, ${err.message}`);
+    }
+  }
+);
+mongoose.set("strictQuery", false);
+
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use(cors());
+app.use(require("./routes"));
+
+app.listen(PORT, () => {
+  console.log(`Example app listening at http://localhost:${PORT}`);
+});
