@@ -3,32 +3,38 @@ import { createReducer } from "@reduxjs/toolkit";
 const initialState = {
   loading: true,
   comments: [],
- 
- 
-
 };
 
 const commentsReducer = createReducer(initialState, (builder) => {
   builder
-  // .addCase("commentsReducer/fetch-todos-category/pending", (state, action) => {
-  //   return {
-  //     loading: true,
-  //   };
-  // })
-  // .addCase("commentsReducer/fetch-todos-category/fulfilled", (state, action) => {
-  //   return {
-  //     loading: false,
+    .addCase(
+      "commentsReducer/fetch-todos-category/pending",
+      (state, action) => {
+        return {
+          loading: true,
+        };
+      }
+    )
+    .addCase(
+      "commentsReducer/fetch-todos-category/fulfilled",
+      (state, action) => {
+        return {
+          loading: false,
 
-  //     comments: action.payload
-  //   };
-  // })
-  // .addCase("commentsReducer/fetch-todos-category/rejected", (state, action) => {
-  //   return {
-  //     loading: false,
-  //     comments: [],
-  //   };
-  // })
-     .addCase("commentsReducer/fetch-todos/pending", (state, action) => {
+          comments: action.payload,
+        };
+      }
+    )
+    .addCase(
+      "commentsReducer/fetch-todos-category/rejected",
+      (state, action) => {
+        return {
+          loading: false,
+          comments: [],
+        };
+      }
+    )
+    .addCase("commentsReducer/fetch-todos/pending", (state, action) => {
       return {
         loading: true,
       };
@@ -37,7 +43,6 @@ const commentsReducer = createReducer(initialState, (builder) => {
       return {
         loading: false,
         comments: action.payload,
-       
       };
     })
     .addCase("commentsReducer/fetch-todos/rejected", (state, action) => {
@@ -49,13 +54,14 @@ const commentsReducer = createReducer(initialState, (builder) => {
     .addCase("commentsReducer/comments/pending", (state, action) => {
       return {
         loading: true,
+        ...state,
       };
     })
     .addCase(`commentsReducer/comments/fulfilled`, (state, action) => {
-     
       return {
         loading: false,
-        comments:  [...state.comments, action.payload]
+        // comments:  action.payload
+        comments: [...state.comments, action.payload],
       };
     })
     .addCase("commentsReducer/comments/rejected", (state, action) => {
@@ -64,27 +70,20 @@ const commentsReducer = createReducer(initialState, (builder) => {
         comments: [],
       };
     })
-   
+
     .addCase("commentsReducer/delete-todo/pending", (state, action) => {
       return {
         loading: true,
       };
     })
     .addCase("commentsReducer/delete-todo/fulfilled", (state, action) => {
-     
-
       return {
-        
         loading: false,
         // comments:action.payload
-        comments: state.comments.filter((item)=>{
-          if(item._id===action.payload) return false;
+        comments: state.comments.filter((item) => {
+          if (item._id === action.payload) return false;
           return true;
-        })
-        
-        
-       
-      
+        }),
       };
     })
     .addCase("commentsReducer/delete-todo/rejected", (state, action) => {
@@ -99,29 +98,28 @@ export const createComment = (text, categoryId) => {
   return async (dispatch, getState) => {
     const state = getState();
     dispatch({ type: "commentsReducer/comments/pending" });
-    try{
+    try {
       const response = await fetch("/comments", {
-      method: "POST",
-      body: JSON.stringify({ text, categoryId }),
-      
-      headers: {
-        Authorization: `Bearer ${state.news.token}`,
-        "Content-type": "application/json",
-      },
-    });
+        method: "POST",
+        body: JSON.stringify({ text, categoryId }),
 
-    const json = await response.json();
-console.log(json)
-    if (json.error) {
-      dispatch({
-        type: "commentsReducer/comments/rejected",
-        error: json.error,
+        headers: {
+          Authorization: `Bearer ${state.news.token}`,
+          "Content-type": "application/json",
+        },
       });
-    } 
-    else {
-      dispatch({ type: "commentsReducer/comments/fulfilled", payload: json });
-    }
-    }catch (e) {
+
+      const json = await response.json();
+
+      if (json.error) {
+        dispatch({
+          type: "commentsReducer/comments/rejected",
+          error: json.error,
+        });
+      } else {
+        dispatch({ type: "commentsReducer/comments/fulfilled", payload: json });
+      }
+    } catch (e) {
       dispatch({
         type: "commentsReducer/comments/rejected",
         error: e.toString(),
@@ -161,7 +159,6 @@ export const fetchComments = () => {
     try {
       const response = await fetch("/comments", {});
       const json = await response.json();
-console.log(json)
       if (json.error) {
         dispatch({
           type: "commentsReducer/fetch-todos/rejected",
@@ -182,36 +179,37 @@ console.log(json)
   };
 };
 export const deleteComments = (userId, id) => {
- 
-  return async (dispatch, getState) => { 
+  return async (dispatch, getState) => {
     const state = getState();
     dispatch({ type: "commentsReducer/delete-todo/pending" });
     try {
       const response = await fetch(`/comments/${id}`, {
-        
-          method: "DELETE",
-          // body: JSON.stringify({ userId, id }),
-          headers: {
-            Authorization: `Bearer ${state.news.token}`,
-          },
+        method: "DELETE",
+        // body: JSON.stringify({ userId, id }),
+        headers: {
+          Authorization: `Bearer ${state.news.token}`,
+        },
       });
       const json = await response.json();
-   console.log(json)
+
       if (json.error) {
         dispatch({
           type: "commentsReducer/delete-todo/rejected",
           error: json.error,
         });
       } else {
-        dispatch({ type: "commentsReducer/delete-todo/fulfilled", payload: json });
+        dispatch({
+          type: "commentsReducer/delete-todo/fulfilled",
+          payload: json,
+        });
       }
-    }catch (e) {
+    } catch (e) {
       dispatch({
         type: "commentsReducer/delete-todo/rejected",
         error: e.toString(),
       });
     }
-
-  }
+  };
 };
+
 export { commentsReducer };
