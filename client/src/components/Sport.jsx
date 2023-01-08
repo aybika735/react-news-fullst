@@ -37,6 +37,8 @@ const Sport = () => {
     setText("");
     dispatch(createComment(text, "637e6c9266aff17b324cfc23"));
     dispatch(fetchComments());
+    
+
   }
   function deleteTodo(userId, id) {
     dispatch(deleteComments(userId, id));
@@ -44,10 +46,7 @@ const Sport = () => {
     
   }
 
-  // useEffect(() => {
-  //   setText("");
-    
-  // }, [comments])
+  
  
   return (
     <>

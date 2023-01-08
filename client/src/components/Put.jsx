@@ -15,6 +15,7 @@ const comments = useSelector((state) => state?.comments?.comments);
 const filteredcomments = comments?.filter(
   (item) => item?.categoryId === "63a0aeaa78b01e14b8f498c7"
 );
+
 // console.log("com",filteredcomments)
 
 const filterednews = news?.filter(

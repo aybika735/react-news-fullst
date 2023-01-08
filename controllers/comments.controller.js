@@ -14,7 +14,7 @@ module.exports.commentscontroller = {
         categoryId
       });
       res.json(comment);
-      console.log(comment)
+     
     } catch (error) {
       return res.status(401).json(e.toString());
     }
