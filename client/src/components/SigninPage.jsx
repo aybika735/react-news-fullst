@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { auth } from "../features";
+import { auth } from "../features/newsReducer";
 
 const Signinpage = () => {
   const [login, setLogin] = useState("");

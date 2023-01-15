@@ -31,7 +31,7 @@ const Comments = ({
 
         <div>
           <button
-            onClick={(e) => handleSubmit(e)}
+            onClick={() => handleSubmit()}
             className="button"
             type="button"
           >

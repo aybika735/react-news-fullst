@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createComment, deleteComments } from "../features";
+import { createComment, deleteComments } from "../features/commentsReducer";
 import Comments from "./Comment";
 
 const Sport = () => {
@@ -21,13 +21,15 @@ const Sport = () => {
   const handleChange = (e) => setText(e.target.value);
 
   const handleSubmit = () => {
-    if (text.length >= 3) {
-      dispatch(createComment(text, "637e6c9266aff17b324cfc23"));
-      setText("");
-    }
+    dispatch(createComment(text, "637e6c9266aff17b324cfc23"));
+    setText("");
   };
 
-  const deleteTodo = (userId, id) => dispatch(deleteComments(userId, id));
+  const deleteTodo = (userId, id) =>{
+    dispatch(deleteComments(userId, id));
+   
+   
+  } 
 
   return (
     <>

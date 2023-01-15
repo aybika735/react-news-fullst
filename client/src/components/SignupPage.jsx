@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createUser } from "../features";
+import { createUser } from "../features/newsReducer";
 
 const Signuppage = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [emailDirty, setEmailDirty] = useState(false);
+    const signingUp = useSelector((state) => state.signingUp);
   const [formvalid, setFormValid] = useState(signingUp);
   const [passwordDirty, setPasswordlDirty] = useState(false);
   const [emailError, setEmailError] = useState("Емайл не может быть пустым");
@@ -15,7 +16,7 @@ const Signuppage = () => {
 
   const dispatch = useDispatch();
 
-  const signingUp = useSelector((state) => state.signingUp);
+
   const error = useSelector((state) => state.news.error);
 
   const re =

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createComment, deleteComments } from "../features";
+import { createComment, deleteComments } from "../features/commentsReducer";
 import Comments from "./Comment";
 
 const Politic = () => {
@@ -22,13 +22,16 @@ const Politic = () => {
   const handleChange = (e) => setText(e.target.value);
 
   const handleSubmit = () => {
-    if (text.length >= 3) {
+
       dispatch(createComment(text, "637e6c8b66aff17b324cfc21"));
       setText("");
-    }
+
   };
 
-  const deleteTodo = (userId, id) => dispatch(deleteComments(userId, id));
+  const deleteTodo = (userId, id) =>{
+    dispatch(deleteComments(userId, id));
+   
+  } 
 
   return (
     <>

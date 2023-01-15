@@ -7,33 +7,33 @@ const initialState = {
 
 const commentsReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(
-      "commentsReducer/fetch-todos-category/pending",
-      (state, action) => {
-        return {
-          loading: true,
-        };
-      }
-    )
-    .addCase(
-      "commentsReducer/fetch-todos-category/fulfilled",
-      (state, action) => {
-        return {
-          loading: false,
+    // .addCase(
+    //   "commentsReducer/fetch-todos-category/pending",
+    //   (state, action) => {
+    //     return {
+    //       loading: true,
+    //     };
+    //   }
+    // )
+    // .addCase(
+    //   "commentsReducer/fetch-todos-category/fulfilled",
+    //   (state, action) => {
+    //     return {
+    //       loading: false,
 
-          comments: action.payload,
-        };
-      }
-    )
-    .addCase(
-      "commentsReducer/fetch-todos-category/rejected",
-      (state, action) => {
-        return {
-          loading: false,
-          comments: [],
-        };
-      }
-    )
+    //       comments: action.payload,
+    //     };
+    //   }
+    // )
+    // .addCase(
+    //   "commentsReducer/fetch-todos-category/rejected",
+    //   (state, action) => {
+    //     return {
+    //       loading: false,
+    //       comments: [],
+    //     };
+    //   }
+    // )
     .addCase("commentsReducer/fetch-todos/pending", (state, action) => {
       return {
         loading: true,
@@ -54,13 +54,13 @@ const commentsReducer = createReducer(initialState, (builder) => {
     .addCase("commentsReducer/comments/pending", (state, action) => {
       return {
         loading: true,
-        ...state,
+        ...state
+       
       };
     })
     .addCase(`commentsReducer/comments/fulfilled`, (state, action) => {
       return {
         loading: false,
-        // comments:  action.payload
         comments: [...state.comments, action.payload],
       };
     })
@@ -74,12 +74,12 @@ const commentsReducer = createReducer(initialState, (builder) => {
     .addCase("commentsReducer/delete-todo/pending", (state, action) => {
       return {
         loading: true,
+       ...state
       };
     })
     .addCase("commentsReducer/delete-todo/fulfilled", (state, action) => {
       return {
         loading: false,
-        // comments:action.payload
         comments: state.comments.filter((item) => {
           if (item._id === action.payload) return false;
           return true;
@@ -110,7 +110,7 @@ export const createComment = (text, categoryId) => {
       });
 
       const json = await response.json();
-
+console.log(json)
       if (json.error) {
         dispatch({
           type: "commentsReducer/comments/rejected",
@@ -159,6 +159,7 @@ export const fetchComments = () => {
     try {
       const response = await fetch("/comments", {});
       const json = await response.json();
+      console.log(json)
       if (json.error) {
         dispatch({
           type: "commentsReducer/fetch-todos/rejected",
@@ -191,7 +192,7 @@ export const deleteComments = (userId, id) => {
         },
       });
       const json = await response.json();
-
+console.log(json)
       if (json.error) {
         dispatch({
           type: "commentsReducer/delete-todo/rejected",
